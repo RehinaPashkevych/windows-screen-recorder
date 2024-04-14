@@ -10,6 +10,7 @@ struct GuiState {
     selected_encoder: VideoEncoderType,
     selected_quality: VideoEncoderQuality,
     selected_path: String,
+    recording_active: bool,
 }
 
 
@@ -22,7 +23,8 @@ impl Default for GuiState {
         Self {
             selected_encoder: VideoEncoderType::Mp4,
             selected_quality: VideoEncoderQuality::HD1080p,
-            selected_path: String::new()
+            selected_path: String::new(),
+            recording_active: false,
         }
     }
 }
@@ -92,14 +94,19 @@ fn new(flags: Self::Flags) -> Result<Self, Self::Error> {
         );
         io::stdout().flush()?;
 
-        self.encoder.as_mut().unwrap().send_frame(frame)?;
-
-        if self.start.elapsed().as_secs() >= 6 {
+        if let Some(encoder) = self.encoder.as_mut() {
+            encoder.send_frame(frame)?;
+        }
+    
+        // Check the recording active state
+        let state = STATE.lock().unwrap();
+        if !state.recording_active {
             self.encoder.take().unwrap().finish()?;
             capture_control.stop();
-            println!();  // Ensure output is on a new line
+            println!("\nCapture Session Closed");
+            return Ok(());
         }
-
+    
         Ok(())
     }
 
@@ -110,74 +117,107 @@ fn new(flags: Self::Flags) -> Result<Self, Self::Error> {
 }
 
 // ============MAIN=======================================================================================
-
-
 fn main() -> Result<(), eframe::Error> {
     let rt = tokio::runtime::Runtime::new().unwrap();  // Create the Tokio runtime
 
-    //let path = String::from("C:/Users/РЕГИНА/Desktop");
     let state = Arc::clone(&STATE);  // Clone the Arc to capture a thread-safe reference to the state
 
     rt.block_on(async {
         let options = eframe::NativeOptions {
-            viewport: egui::ViewportBuilder::default().with_inner_size([420.0, 500.0]),
+            viewport: egui::ViewportBuilder::default().with_inner_size([420.0, 200.0]),
             ..Default::default()
         };
 
         eframe::run_simple_native("Screen recorder", options, move |ctx, _frame| {
+            // Custom visuals at the context level
+            let mut visuals = egui::Visuals::dark();
+            visuals.override_text_color = Some(egui::Color32::from_rgb(255, 255, 255));  // Make all text white
+            visuals.widgets.noninteractive.bg_fill = egui::Color32::from_rgb(25, 20, 20);
+            visuals.widgets.inactive.bg_fill = egui::Color32::from_rgb(40, 35, 35);
+            visuals.widgets.hovered.bg_fill = egui::Color32::from_rgb(60, 55, 55);
+            visuals.widgets.active.bg_fill = egui::Color32::from_rgb(80, 75, 75);
+            visuals.widgets.inactive.bg_stroke.width = 0.0;
+            visuals.widgets.active.bg_stroke.width = 1.0;
+            visuals.widgets.active.bg_stroke.color = egui::Color32::from_rgb(140, 140, 255);
+            ctx.set_visuals(visuals);
+
+                // Adjust font sizes
+            let font_id = egui::FontId::new(16.0, egui::FontFamily::Proportional); // Create a font identifier for size 20
+            let mut style = (*ctx.style()).clone();
+            style.text_styles.insert(egui::TextStyle::Body, font_id.clone()); // Use clone for Body text style
+            style.text_styles.insert(egui::TextStyle::Button, font_id.clone()); // Use clone for Button text style
+            style.text_styles.insert(egui::TextStyle::Heading, egui::FontId::new(22.0, egui::FontFamily::Proportional)); // Larger font for headings
+            ctx.set_style(style);
+
+
+
             egui::CentralPanel::default().show(ctx, |ui| {
                 ui.heading("Settings");
-                
-              
+
                 ui.horizontal(|ui| {
                     let path_label = ui.label("Path + name: ");
                     let mut state_guard = STATE.lock().unwrap();
-                    let state = &mut *state_guard; // Get a mutable reference to the state
-                
+                    let state = &mut *state_guard;
                     ui.text_edit_singleline(&mut state.selected_path).labelled_by(path_label.id);
                 });
 
-                   // Ensure state is locked and accessed safely
+                // Accessing the state safely
                 let mut state = state.lock().unwrap();
-                
-           
-                egui::ComboBox::from_label("Encoder type: ")
-                    .selected_text(format!("{:?}", state.selected_encoder))
-                    .show_ui(ui, |ui| {
-                        ui.selectable_value(&mut state.selected_encoder, VideoEncoderType::Avi, "Avi");
-                        ui.selectable_value(&mut state.selected_encoder, VideoEncoderType::Hevc, "Hevc");
-                        ui.selectable_value(&mut state.selected_encoder, VideoEncoderType::Mp4, "Mp4");
-                        ui.selectable_value(&mut state.selected_encoder, VideoEncoderType::Wmv, "Wmv");
-                    });
 
-                egui::ComboBox::from_label("Quality: ")
-                    .selected_text(format!("{:?}", state.selected_quality))
-                    .show_ui(ui, |ui| {
-                      //  ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Auto, "Auto");
-                        ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::HD1080p, "HD1080p");
-                        ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::HD720p, "HD720p");
-                        ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Wvga, "Wvga");
-                        ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Ntsc, "Ntsc");
-                        ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Pal, "Pal");
-                        ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Vga, "Vga");
-                        ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Qvga, "Qvga");
-                        ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Uhd2160p, "Uhd2160p");
-                        ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Uhd4320p, "Uhd4320p");
-            
-                    });
+                // Horizontal layout for encoder type label and combobox
+                ui.horizontal(|ui| {
+                    ui.label("Encoder type: ");
+                    egui::ComboBox::from_id_source("encoder_type")
+                        .selected_text(format!("{:?}", state.selected_encoder))
+                        .show_ui(ui, |ui| {
+                            ui.selectable_value(&mut state.selected_encoder, VideoEncoderType::Avi, "Avi");
+                            ui.selectable_value(&mut state.selected_encoder, VideoEncoderType::Hevc, "Hevc");
+                            ui.selectable_value(&mut state.selected_encoder, VideoEncoderType::Mp4, "Mp4");
+                            ui.selectable_value(&mut state.selected_encoder, VideoEncoderType::Wmv, "Wmv");
+                        });
+                });
 
-                if ui.button("Start").clicked() {
-                    tokio::spawn(async {
-                        match run_recorder().await {
-                            Ok(_) => println!("Recording started successfully."),
-                            Err(e) => eprintln!("Failed to start recording: {:?}", e),
-                        }
-                    });
-                }
+                // Horizontal layout for quality label and combobox
+                ui.horizontal(|ui| {
+                    ui.label("Quality: ");
+                    egui::ComboBox::from_id_source("quality")
+                        .selected_text(format!("{:?}", state.selected_quality))
+                        .show_ui(ui, |ui| {
+                            ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::HD1080p, "HD1080p");
+                            ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::HD720p, "HD720p");
+                            ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Wvga, "Wvga");
+                            ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Ntsc, "Ntsc");
+                            ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Pal, "Pal");
+                            ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Vga, "Vga");
+                            ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Qvga, "Qvga");
+                            ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Uhd2160p, "Uhd2160p");
+                            ui.selectable_value(&mut state.selected_quality, VideoEncoderQuality::Uhd4320p, "Uhd4320p");
+                        });
+                });
+
+                ui.add_space(20.0); // Add 20 pixels of space before the button row
+
+                ui.horizontal(|ui| {
+                    if ui.add(egui::Button::new("Start").fill(egui::Color32::from_rgb(90, 130, 190)).rounding(egui::Rounding::same(10.0))).clicked() {
+                        state.recording_active = true;
+                        tokio::spawn(async {
+                            match run_recorder().await {
+                                Ok(_) => println!("Recording started successfully."),
+                                Err(e) => eprintln!("Failed to start recording: {:?}", e),
+                            }
+                        });
+                    }
+
+                    if ui.add(egui::Button::new("Stop").fill(egui::Color32::from_rgb(190, 90, 90)).rounding(egui::Rounding::same(10.0))).clicked() {
+                        state.recording_active = false;
+                        println!("Recording stopped.");
+                    } 
+                });
             });
         })
     })
 }
+
 
 
 
@@ -202,4 +242,3 @@ async fn run_recorder() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
-
