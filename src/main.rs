@@ -1,16 +1,18 @@
 use std::{
     io::{self, Write},
-    time::Instant,
+    time::{Duration, Instant},
 };
 
 use once_cell::sync::Lazy;
 use std::sync::{Arc, Mutex};
+use chrono::Local; 
 
 struct GuiState {
     selected_encoder: VideoEncoderType,
     selected_quality: VideoEncoderQuality,
     selected_path: String,
     recording_active: bool,
+    recording_start: Option<Instant>,
 }
 
 
@@ -25,6 +27,7 @@ impl Default for GuiState {
             selected_quality: VideoEncoderQuality::HD1080p,
             selected_path: String::new(),
             recording_active: false,
+            recording_start: None,
         }
     }
 }
@@ -65,8 +68,10 @@ fn new(flags: Self::Flags) -> Result<Self, Self::Error> {
     };
 
 
-    // Construct the filename using the formatted date-time and the file extension
-    let filename = format!("{}rec.{}", state.selected_path, file_extension);
+    // Include current date and time in the filename
+    let now = Local::now();
+    let datetime_format = now.format("%Y%m%d_%H%M%S").to_string(); // Format date and time
+    let filename = format!("{}rec_{}.{}", state.selected_path, datetime_format, file_extension);
 
     // Create the video encoder with the new filename
     let encoder = VideoEncoder::new(
@@ -129,6 +134,7 @@ fn main() -> Result<(), eframe::Error> {
         };
 
         eframe::run_simple_native("Screen recorder", options, move |ctx, _frame| {
+            
             // Custom visuals at the context level
             let mut visuals = egui::Visuals::dark();
             visuals.override_text_color = Some(egui::Color32::from_rgb(255, 255, 255));  // Make all text white
@@ -198,8 +204,13 @@ fn main() -> Result<(), eframe::Error> {
                 ui.add_space(20.0); // Add 20 pixels of space before the button row
 
                 ui.horizontal(|ui| {
-                    if ui.add(egui::Button::new("Start").fill(egui::Color32::from_rgb(90, 130, 190)).rounding(egui::Rounding::same(10.0))).clicked() {
+                    // Temporarily disable UI interaction if recording is active
+                    let response_start = ui.add_enabled(!state.recording_active, egui::Button::new("Start").fill(egui::Color32::from_rgb(90, 130, 190))
+                      .rounding(egui::Rounding::same(10.0)));
+
+                    if response_start.clicked() {
                         state.recording_active = true;
+                        state.recording_start = Some(Instant::now());
                         tokio::spawn(async {
                             match run_recorder().await {
                                 Ok(_) => println!("Recording started successfully."),
@@ -208,10 +219,24 @@ fn main() -> Result<(), eframe::Error> {
                         });
                     }
 
-                    if ui.add(egui::Button::new("Stop").fill(egui::Color32::from_rgb(190, 90, 90)).rounding(egui::Rounding::same(10.0))).clicked() {
+                    let response_stop = ui.add_enabled(state.recording_active, egui::Button::new("Stop").fill(egui::Color32::from_rgb(190, 90, 90))
+                        .rounding(egui::Rounding::same(10.0)));
+
+                    if response_stop.clicked(){
                         state.recording_active = false;
                         println!("Recording stopped.");
                     } 
+
+                    if state.recording_active {
+                        if let Some(start) = state.recording_start {
+                            let elapsed = start.elapsed();
+                            let hours = elapsed.as_secs() / 3600;
+                            let minutes = (elapsed.as_secs() % 3600) / 60;
+                            let seconds = elapsed.as_secs() % 60;
+                            ui.label(format!("{:02}:{:02}:{:02}", hours, minutes, seconds));
+                            ctx.request_repaint();  // Request a repaint at the beginning of each frame
+                        }
+                    }
                 });
             });
         })
