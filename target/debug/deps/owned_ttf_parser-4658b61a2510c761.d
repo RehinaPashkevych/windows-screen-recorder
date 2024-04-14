@@ -1,0 +1,10 @@
+C:\Users\РЕГИНА\Desktop\studia\RUST\screen-recorder\target\debug\deps\libowned_ttf_parser-4658b61a2510c761.rmeta: C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\lib.rs C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\convert.rs C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\owned.rs C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\preparse.rs
+
+C:\Users\РЕГИНА\Desktop\studia\RUST\screen-recorder\target\debug\deps\libowned_ttf_parser-4658b61a2510c761.rlib: C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\lib.rs C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\convert.rs C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\owned.rs C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\preparse.rs
+
+C:\Users\РЕГИНА\Desktop\studia\RUST\screen-recorder\target\debug\deps\owned_ttf_parser-4658b61a2510c761.d: C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\lib.rs C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\convert.rs C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\owned.rs C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\preparse.rs
+
+C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\lib.rs:
+C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\convert.rs:
+C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\owned.rs:
+C:\Users\РЕГИНА\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.20.0\src\preparse.rs:
