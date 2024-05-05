@@ -17,8 +17,8 @@ title: Screen Recorder Rust Tutorial
 email: rehina.pashkevych@student.put.poznan.pl
 description: >- # this means to ignore newlines until "baseurl:"
   This is a step-by-step tutorial on my screen recorder project, which will give your explanation about some RUST functionalities and crates used in this project.
-baseurl: "windows-screen-recorder" # the subpath of your site, e.g. /blog
-url: "https://rehinapashkevych.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/windows-screen-recorder" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: jekyllrb
 #github_username:  jekyll
 
