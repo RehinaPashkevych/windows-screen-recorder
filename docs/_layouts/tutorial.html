@@ -10,7 +10,7 @@
       <div class="container">
         <h1>{{ page.title }}</h1>
         <nav class="home-button">
-          <a href="{{ site.baseurl }}" class="btn home-btn">Home</a>  
+          <a href="{{ site.url }}{{ site.baseurl }}" class="btn home-btn">Home</a>  
         </nav>
       </div>
     </header>
@@ -20,10 +20,10 @@
     <footer>
       <div class="container">
         {% if page.previous %}
-          <a href="{{ site.baseurl }}{{ page.previous.url }}" class="btn">&laquo; Previous</a>
+          <a href="{{ page.previous.url }}" class="btn">&laquo; Previous</a>
         {% endif %}
         {% if page.next %}
-          <a href="{{ site.baseurl }}{{ page.next.url }}" class="btn">Next &raquo;</a>
+          <a href="{{ page.next.url }}" class="btn">Next &raquo;</a>
         {% endif %}
       </div>
     </footer>
