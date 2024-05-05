@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title | default: site.title }}</title>
+  <link rel="stylesheet" href="\assets\css\style.css">  
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1><a href="/">{{ site.title }}</a></h1>
+      <nav>
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/">Home</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="container">
+    {{ content }}
+  </div>
+  <footer>
+    <div class="container">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

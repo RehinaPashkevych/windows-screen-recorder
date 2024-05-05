@@ -1,0 +1,26 @@
+---
+layout: default
+---
+
+<header>
+  <p>{{ site.description }}</p>
+</header>
+
+<section id="about-me">
+  <h2>About Me</h2>
+  <p>Name: Rehina Pashkevych</p>
+  <p>School Email: <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+  <p>This site was created on: {{ "now" | date: "%B %d, %Y" }}</p>
+</section>
+
+<section id="tutorials">
+  <h2>Tutorials</h2>
+  <ul>
+    {% for tutorial in site.tutorials %}
+      <li>
+        <a href="{{ tutorial.url }}">{{ tutorial.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+

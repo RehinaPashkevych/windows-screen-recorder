@@ -1,0 +1,90 @@
+/* Main styles */
+body, html {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #FAFAFA;
+    color: #333333;
+    font-size: 18px; 
+  }
+  
+  .container {
+    width: 80%;
+    max-width: 960px;
+    margin: auto;
+    padding: 20px;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+  }
+  
+  header {
+    background-color: #FFFFFF;
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 1px solid #DDDDDD;
+  }
+  
+  footer {
+    background-color: #FFFFFF;
+    text-align: center;
+    padding: 10px 0;
+    border-top: 1px solid #DDDDDD;
+    margin-top: 20px;
+  }
+  
+  /* Navigation and links */
+  nav ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  nav ul li {
+    display: inline;
+    margin-right: 10px;
+  }
+  
+  a {
+    color: #007BFF; 
+    text-decoration: none; 
+    transition: color 0.3s ease-in-out;
+  }
+  
+  a:hover, a:focus {
+    color: #0056B3; 
+  }
+  /* Button styling */
+  .btn {
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: #FFFFFF;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  .btn:hover {
+    background-color: #0056B3;
+  }
+  
+  /* Header styles */
+  h1, h2 {
+    color: #2C3E50; 
+  }
+  
+  h2 {
+    font-size: 24px; 
+    margin-top: 20px;
+    border-bottom: 2px solid #EAECEE; 
+    padding-bottom: 10px;
+  }
+  
+  /* Additional styles for emphasis */
+  strong {
+    color: #E74C3C; /* Red color for strong emphasis */
+  }
+  
+  em {
+    font-style: italic;
+    color: #3498DB; /* Blue color for emphasis */
+  }
+  

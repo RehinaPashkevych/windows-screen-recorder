@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }}</title>
+  <link rel="stylesheet" href="\assets\css\style-tutorial.css">  
+</head>
+    <body>
+    <header>
+      <div class="container">
+        <h1>{{ page.title }}</h1>
+        <nav class="home-button">
+          <a href="/" class="btn home-btn">Home</a>  
+        </nav>
+      </div>
+    </header>
+    <article class="container">
+      {{ content }}
+    </article>
+    <footer>
+      <div class="container">
+        {% if page.previous %}
+          <a href="{{ page.previous.url }}" class="btn">&laquo; Previous</a>
+        {% endif %}
+        {% if page.next %}
+          <a href="{{ page.next.url }}" class="btn">Next &raquo;</a>
+        {% endif %}
+      </div>
+    </footer>
+  </body>
+  </html>

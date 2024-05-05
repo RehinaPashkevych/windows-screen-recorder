@@ -1,6 +1,6 @@
 use std::{
     io::{self, Write},
-    time::{Duration, Instant},
+    time::{Instant},
 };
 
 use once_cell::sync::Lazy;
@@ -55,37 +55,37 @@ impl GraphicsCaptureApiHandler for Capture {
     type Error = Box<dyn std::error::Error + Send + Sync>;
 
  
-fn new(flags: Self::Flags) -> Result<Self, Self::Error> {
-    println!("Got The Flag: {flags}");
-    let state = STATE.lock().unwrap(); // Safely access the state
+    fn new(flags: Self::Flags) -> Result<Self, Self::Error> {
+        println!("Got The Flag: {flags}");
+        let state = STATE.lock().unwrap(); // Safely access the state
 
-    // Determine the file extension based on the selected encoder type
-    let file_extension = match state.selected_encoder {
-        VideoEncoderType::Avi => "avi",
-        VideoEncoderType::Hevc => "hevc",
-        VideoEncoderType::Mp4 => "mp4",
-        VideoEncoderType::Wmv => "wmv",
-    };
+        // Determine the file extension based on the selected encoder type
+        let file_extension = match state.selected_encoder {
+            VideoEncoderType::Avi => "avi",
+            VideoEncoderType::Hevc => "hevc",
+            VideoEncoderType::Mp4 => "mp4",
+            VideoEncoderType::Wmv => "wmv",
+        };
 
 
-    // Include current date and time in the filename
-    let now = Local::now();
-    let datetime_format = now.format("%Y%m%d_%H%M%S").to_string(); // Format date and time
-    let filename = format!("{}rec_{}.{}", state.selected_path, datetime_format, file_extension);
+        // Include current date and time in the filename
+        let now = Local::now();
+        let datetime_format = now.format("%Y%m%d_%H%M%S").to_string(); // Format date and time
+        let filename = format!("{}rec_{}.{}", state.selected_path, datetime_format, file_extension);
 
-    // Create the video encoder with the new filename
-    let encoder = VideoEncoder::new(
-        state.selected_encoder,
-        state.selected_quality,
-        1920, 1080,
-        &filename,
-    )?;
+        // Create the video encoder with the new filename
+        let encoder = VideoEncoder::new(
+            state.selected_encoder,
+            state.selected_quality,
+            1920, 1080,
+            &filename,
+        )?;
 
-    Ok(Self {
-        encoder: Some(encoder),
-        start: Instant::now(),
-    })
-}
+        Ok(Self {
+            encoder: Some(encoder),
+            start: Instant::now(),
+        })
+    }
 
 
     fn on_frame_arrived(
@@ -134,7 +134,8 @@ fn main() -> Result<(), eframe::Error> {
         };
 
         eframe::run_simple_native("Screen recorder", options, move |ctx, _frame| {
-            
+
+
             // Custom visuals at the context level
             let mut visuals = egui::Visuals::dark();
             visuals.override_text_color = Some(egui::Color32::from_rgb(255, 255, 255));  // Make all text white
@@ -226,6 +227,7 @@ fn main() -> Result<(), eframe::Error> {
                         state.recording_active = false;
                         println!("Recording stopped.");
                     } 
+                    
 
                     if state.recording_active {
                         if let Some(start) = state.recording_start {
@@ -242,7 +244,6 @@ fn main() -> Result<(), eframe::Error> {
         })
     })
 }
-
 
 
 
