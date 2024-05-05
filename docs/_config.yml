@@ -27,13 +27,11 @@ markdown: kramdown
 #theme: minima
 plugins:
   - jekyll-feed
-  - jekyll-sass-converter
-
 
 collections:
   tutorials:
     output: true
-    permalink: /tutorials/:name/
+    permalink: /windows-screen-recorder/tutorials/:name/
 
 
 # Exclude from processing.
