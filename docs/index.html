@@ -18,7 +18,7 @@ layout: default
   <ul>
     {% for tutorial in site.tutorials %}
       <li>
-        <a href="{{ tutorial.url }}">{{ tutorial.title }}</a>
+        <a href="{{ site.baseurl }}{{ tutorial.url }}">{{ tutorial.title }}</a>
       </li>
     {% endfor %}
   </ul>
