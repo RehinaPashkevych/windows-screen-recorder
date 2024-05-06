@@ -88,3 +88,34 @@ body, html {
     color: #3498DB; /* Blue color for emphasis */
   }
   
+  blockquote {
+    font-family: 'Georgia', serif; /* Serif font for a more formal look */
+    font-size: 16px; /* Suitable font size for readability */
+    border-left: 4px solid #ccc; /* Subtle left border */
+    margin: 20px 0; /* Adds space around the blockquote */
+    padding: 10px 20px; /* Padding inside the blockquote */
+    background-color: #f9f9f9; /* Light background color for distinction without harsh contrast */
+    color: #333; /* Dark grey text color for seriousness */
+}
+
+blockquote p {
+    margin: 0; /* Remove default paragraph margin to control spacing explicitly */
+}
+
+blockquote a {
+    font-style: italic; /* Italicize the link to denote source/reference */
+    color: #0074d9; /* Gentle blue color for links */
+    text-decoration: none; /* No underline to keep it clean */
+}
+
+blockquote a:hover {
+    text-decoration: underline; /* Underline on hover for better user interaction */
+}
+
+/* General rule for the source to be reusable in other templates */
+blockquote p:last-child  {
+    font-size: 14px; /* Smaller font size than main text */
+    color: #666; /* Lighter text color to differentiate from main quote */
+    display: block; /* Block display to ensure it appears on a new line */
+    margin-top: 10px; /* Space between the quote and the source citation */
+}

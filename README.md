@@ -1,6 +1,6 @@
 #### Introduction
 
-Screen Recorder is a simple tool for recording screen activities on Windows. Built with Rust, it supports various video formats and includes a customizable GUI for ease of use.
+Screen Recorder is a simple tool for recording screen activities on Windows. Built with Rust, it supports various video formats and includes a customizable GUI for ease of use. Reach the tutorial for this app: https://rehinapashkevych.github.io/windows-screen-recorder/
 
 #### Features
 
@@ -40,6 +40,7 @@ Use the GUI to start and stop recordings. Recordings will be saved in the specif
 *   **Capture Handling**: Utilizes `windows-capture` for screen capture and `tokio` for managing asynchronous tasks efficiently.
 *   **GUI**: Built with `eframe` and `egui`, providing a responsive user interface.
 *   **Video Encoding**: Supports multiple encoding types and qualities, configurable through the GUI.
+*   **docs directory**: Jekyll tutorial.
 
 #### Dependencies
 - [`windows-capture`](https://github.com/NiiightmareXD/windows-capture/tree/main) for screen capture functionality. This crate allows the application to capture screen data efficiently.
