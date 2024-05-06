@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: "First Tutorial: Introduction to Rust"
+title: "01: Introduction to Rust"
 ---
 
 ## Introduction to Rust
