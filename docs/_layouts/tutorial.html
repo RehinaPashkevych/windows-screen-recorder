@@ -20,12 +20,12 @@
     <footer>
       <div class="container">
         {% if page.previous %}
-          <a href="windows-screen-recorder/{{ page.previous.url }}" class="btn">&laquo; Previous</a>
+          <a href="{{ site.baseurl }}{{ page.previous.url }}" class="btn">&laquo; Previous</a>
         {% endif %}
         {% if page.next %}
-          <a href="windows-screen-recorder/{{ page.next.url }}" class="btn">Next &raquo;</a>
+          <a href="{{ site.baseurl }}{{ page.next.url }}" class="btn">Next &raquo;</a>
         {% endif %}
-      </div>
+      </div>      
     </footer>
   </body>
   </html>
