@@ -6,9 +6,9 @@ title: "03: Recording"
 In the previous chapter I mentioned about GuiState structure, STATE variable. `Capture` struct and an implementation GraphicsCaptureApiHandleris given from an author [usage](https://github.com/NiiightmareXD/windows-capture/tree/main). A struct in Rust is similar to classes in other languages but primarily used for data storage. GraphicsCaptureApiHandler is an implementation of the trait for the Capture struct. 
 
 > In Rust, traits and impl are fundamental concepts used to define and implement shared behavior across different data types.
->
+
 > A **trait** in Rust is akin to an interface in other programming languages. It's a collection of methods that define behavior. However, unlike interfaces in some languages, traits can provide default method implementations. Traits allow you to specify that a certain type has particular behavior, or can do specific things. For example, the `std::fmt::Display` trait specifies that a type can be displayed (converted to a string in a human-readable format).
->
+
 > The **`impl`** keyword is used to implement blocks in Rust, which can be either for implementing a trait for a specific type or for adding methods and associated functions directly to the type itself. When used with a trait, `impl` defines how the methods of that trait are implemented for a specific type. When used without a trait, it allows defining methods that are directly associated with a specific type.
 
 I define the implementation `Default` for `Guistate` struct  to determine default variables if an user does not provide it.  The `Default` trait is a standard Rust trait used to create an instance of a type with default values. Implementing the Default trait for a type allows us to use the Default::default() function to get a new instance of that type, populated with default values. Here is short tutorial how implementations are created: 

@@ -117,6 +117,7 @@ Let`s clarify all things in this snippet.
     *   `recording_start`: This field stores the timestamp or other relevant information marking the start of the recording.
 
 * `Lazy<Arc<Mutex<GuiState>>> `
+
     * `Lazy`: This is a utility that ensures the initialization of the variable it wraps only happens once and only when it's actually needed (not when the program starts). It's useful for improving performance and avoiding unnecessary computations.
     * `Arc`: This stands for "Atomic Reference Counting". `Arc` is used to enable multiple parts of your program to own a piece of data and to access it concurrently, in a thread-safe way. This means multiple parts of the program can hold a reference to the GuiState and request access to it (by trying to lock the Mutex).
     *  `Mutex`: Mutex stands for "mutual exclusion". A `Mutex` allows only one thread to access some data at any one time, which helps prevent bugs that occur when multiple threads try to change the same data simultaneously. 

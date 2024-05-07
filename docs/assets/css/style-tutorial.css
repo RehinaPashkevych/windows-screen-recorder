@@ -112,10 +112,58 @@ blockquote a:hover {
     text-decoration: underline; /* Underline on hover for better user interaction */
 }
 
-/* General rule for the source to be reusable in other templates */
-blockquote p:last-child  {
+blockquote p:not(:only-child):last-child  {
     font-size: 14px; /* Smaller font size than main text */
     color: #666; /* Lighter text color to differentiate from main quote */
     display: block; /* Block display to ensure it appears on a new line */
     margin-top: 10px; /* Space between the quote and the source citation */
+}
+
+/* Base styling for the code block container */
+.language-rust {
+  background-color: #282c34; /* dark background for the code block */
+  color: #abb2bf; /* light gray text color */
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+/* General text styling inside the code block */
+.highlight pre {
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace; /* monospaced font makes code easier to read */
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Styling for identifiers and text */
+.highlight .n {
+  color: #abb2bf; /* Default text color */
+}
+
+/* Function names and other callable identifiers */
+.highlight .nf {
+  color: #61afef; /* light blue */
+}
+
+/* Keywords */
+.highlight .k {
+  color: #c678dd; /* soft purple */
+  font-weight: bold; /* makes keywords bold */
+}
+
+/* Punctuation characters */
+.highlight .p {
+  color: #56b6c2; /* cyan color */
+}
+
+/* Comments */
+.highlight .c1 {
+  color: #5c6370; /* muted grey */
+  font-style: italic; /* italicize comments */
+}
+
+/* Additional styling for code clarity */
+.highlight pre {
+  margin: 0; /* Removes default margin */
+  white-space: pre-wrap; /* Ensures code wraps and does not overflow container */
 }
