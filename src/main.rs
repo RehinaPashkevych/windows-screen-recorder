@@ -7,6 +7,15 @@ use once_cell::sync::Lazy;
 use std::sync::{Arc, Mutex};
 use chrono::Local; 
 
+use windows_capture::{
+    capture::GraphicsCaptureApiHandler,
+    encoder::{VideoEncoder, VideoEncoderQuality, VideoEncoderType},
+    frame::Frame,
+    graphics_capture_api::InternalCaptureControl,
+    monitor::Monitor,
+    settings::{ColorFormat, CursorCaptureSettings, DrawBorderSettings, Settings},
+};
+
 struct GuiState {
     selected_encoder: VideoEncoderType,
     selected_quality: VideoEncoderQuality,
@@ -31,16 +40,6 @@ impl Default for GuiState {
         }
     }
 }
-
-
-use windows_capture::{
-    capture::GraphicsCaptureApiHandler,
-    encoder::{VideoEncoder, VideoEncoderQuality, VideoEncoderType},
-    frame::Frame,
-    graphics_capture_api::InternalCaptureControl,
-    monitor::Monitor,
-    settings::{ColorFormat, CursorCaptureSettings, DrawBorderSettings, Settings},
-};
 
 // This struct will be used to handle the capture events.
 struct Capture {
