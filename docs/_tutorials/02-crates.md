@@ -62,7 +62,6 @@ Now we start to dig into the code.
 *   [**`tokio::runtime::Runtime`**](https://docs.rs/tokio/latest/tokio/runtime/index.html):
 
     * We declare that we want to use Tokio Runtime component. We could do it using `use` statement too, like in 1-8 lines in the `main.rs`.
-    
     *   **Tokio Runtime**: This is the heart of Tokio's asynchronous model. The `Runtime` contains all the infrastructure for executing asynchronous tasks, managing their lifecycles, and handling scheduling.
     *   **Namespace and Module**: `tokio::runtime` indicates that the [`Runtime`](https://docs.rs/tokio/latest/tokio/runtime/struct.Runtime.html) struct is being accessed from the `runtime` module of the Tokio crate.
 

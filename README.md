@@ -2,6 +2,9 @@
 
 Screen Recorder is a simple tool for recording screen activities on Windows. Built with Rust, it supports various video formats and includes a customizable GUI for ease of use. Reach the tutorial for this app: https://rehinapashkevych.github.io/windows-screen-recorder/
 
+<img src="images/Screenshot_131.png" alt="app img" width="500" height="300">
+
+
 #### Features
 
 *   Record screen activities in multiple video formats (MP4, AVI, WMV, HEVC).
